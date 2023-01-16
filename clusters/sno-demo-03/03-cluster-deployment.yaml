@@ -1,0 +1,31 @@
+---
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  annotations:
+    # agentBareMetal-agentSelector/autoSelect: "false"
+    agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+  labels:
+    cluster.open-cluster-management.io/clusterset: 'default'
+    hive.openshift.io/cluster-platform: agent-baremetal
+  name: 'sno-demo-03'
+  namespace: 'sno-demo-03'
+spec:
+  baseDomain: clustership.com
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    name: sno-demo-03
+    version: v1beta1
+  clusterName: sno-demo-03
+  controlPlaneConfig:
+    servingCertificates: {}
+  installed: false
+  platform:
+    agentBareMetal: 
+      agentSelector:
+        matchLabels:
+          infraenvs.agent-install.openshift.io: sno-demo-03
+          cluster-name: sno-demo-03
+  pullSecretRef:
+    name: pullsecret-cluster-sno-demo-03
