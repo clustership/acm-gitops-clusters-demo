@@ -5,7 +5,7 @@ metadata:
   labels:
     cloud: hybrid
     name: sno-demo-03
-    cluster.open-cluster-management.io/clusterset: default
+    cluster.open-cluster-management.io/clusterset: all-openshift-clusters
     feature.open-cluster-management.io/addon-application-manager: unreachable
   name: sno-demo-03
 spec:
