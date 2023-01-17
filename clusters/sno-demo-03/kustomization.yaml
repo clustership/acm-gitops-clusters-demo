@@ -16,4 +16,5 @@ resources:
 - 03-cluster-deployment.yaml
 - 04-agent-cluster-install.yaml
 - 05-managed-cluster.yaml
+- 05-managed-cluster-infos.yaml
 - 06-klusterlet-addon-config.yaml
