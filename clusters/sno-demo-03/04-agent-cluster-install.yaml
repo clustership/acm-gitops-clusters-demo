@@ -15,7 +15,6 @@ spec:
     name: sno-demo-03
   # holdInstallation: true
   provisionRequirements:
-    workerAgents: 0
     controlPlaneAgents: 1
   imageSetRef:
     name: 'img4.11.22-x86-64-appsub'
