@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: acm-cluster-deploy-set
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: acm-cluster-deploy-set-placement
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: acm-cluster-deploy-set-{{name}}
+      labels:
+        velero.io/exclude-from-backup: "true"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/clustership/acm-gitops-clusters-demo
+        targetRevision: main
+        path: clusters/*
+      destination:
+        namespace: openshift-gitops
+        server: "{{server}}"
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: false
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=false
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: acm-cluster-deploy-set-placement
+  namespace: openshift-gitops
+spec:
+  clusterSets:
+    - default
+  predicates:
+    - requiredClusterSelector:
+        labelSelector:
+          matchExpressions:
+            - key: cluster.open-cluster-management.io/clusterset
+              operator: In
+              values:
+                - default
