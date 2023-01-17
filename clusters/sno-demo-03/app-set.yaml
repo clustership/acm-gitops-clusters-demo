@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: acm-gitops-clusters-demo
+  namespace: openshift-gitops
+spec:
+  generators:
+  - git:
+      directories:
+      - path: clusters/*
+      repoURL: https://github.com/clustership/acm-gitops-clusters-demo
+      revision: main
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      destination:
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: '{{path}}'
+        repoURL: https://github.com/clustership/acm-gitops-clusters-demo
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+        retry:
+          backoff:
+            duration: 15s
+            factor: 2
+            maxDuration: 5m
+          limit: 15
