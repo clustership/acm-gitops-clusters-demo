@@ -12,9 +12,6 @@ spec:
   agentLabels:
     agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
     cluster: sno-demo-03
-  agentLabelSelector:
-    matchLabels:
-      cluster: sno-demo-03
   cpuArchitecture: x86_64
   # nmStateConfigLabelSelector:
   #   matchLabels:
