@@ -8,6 +8,8 @@ metadata:
     agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
   annotations:
     agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   clusterDeploymentRef:
     name: sno-demo-03
